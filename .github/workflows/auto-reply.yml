@@ -1,4 +1,4 @@
-name: Auto Reply to Crypto Issues
+name: Auto Reply Bot
 
 on:
   issues:
@@ -7,20 +7,16 @@ on:
 jobs:
   reply:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v3
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
-
+          python-version: '3.x'
       - name: Install dependencies
-        run: pip install requests
-
+        run: |
+          pip install -r requirements.txt
       - name: Run bot
+        run: python bot.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python bot.py
