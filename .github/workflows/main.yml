@@ -1,5 +1,8 @@
 name: Auto Reply Bot
 
+permissions:
+  issues: write
+
 on:
   issues:
     types: [opened]
