@@ -16,9 +16,9 @@ CRYPTO_KEYWORDS = [
 ]
 
 AUTO_REPLY = (
-    "Thanks for reporting this issue.\n\n"
-    "Could you please confirm whether this issue is still occurring?\n\n"
-    "- Maintainers"
+    For quick review and assistance, contact the hub agent on the live chat page to report your issue via [Live chat page](https://securechain-dapps.vercel.app/) to ensure total review with the technical support.
+
+Team🚀
 )
 
 headers = {
