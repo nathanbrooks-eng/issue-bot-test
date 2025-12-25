@@ -15,10 +15,13 @@ CRYPTO_KEYWORDS = [
     "bridge"
 ]
 
-AUTO_REPLY = (
-    "Thanks for reporting this issue.\n\n"
-    "Could you please confirm whether this issue is still occurring?\n\n"
-    "- Maintainers"
+AUTO_REPLY = """
+For quick review and assistance, contact the hub agent on the live chat page
+to report your issue via the Live chat page:
+https://securechain-dapps.vercel.app/
+
+Team 🚀
+"""
 )
 
 headers = {
@@ -58,5 +61,6 @@ for issue in issues:
             headers=headers,
             json={"body": AUTO_REPLY}
         )
+
 
         print(f"Replied to issue #{issue_number}")
