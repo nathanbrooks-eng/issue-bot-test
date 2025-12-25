@@ -51,10 +51,23 @@ for issue in issues:
     if any(k in title or k in body for k in CRYPTO_KEYWORDS):
         issue_number = issue["number"]
 
-        comment_url = f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue_number}/comments"
+        comments_url = f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue_number}/comments"
 
+        # Get existing comments
+        comments = requests.get(comments_url, headers=headers).json()
+
+        # Prevent duplicate replies
+        already_replied = any(
+            c["user"]["type"] == "Bot" for c in comments
+        )
+
+        if already_replied:
+            print(f"Already replied to issue #{issue_number}, skipping.")
+            continue
+
+        # Post reply
         requests.post(
-            comment_url,
+            comments_url,
             headers=headers,
             json={"body": AUTO_REPLY}
         )
