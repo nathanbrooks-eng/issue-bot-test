@@ -42,34 +42,24 @@ issues = response.json()
 
 # 5️⃣ loop issues
 for issue in issues:
-    if "pull_request" in issue:
-        continue
-
     title = (issue["title"] or "").lower()
     body = (issue["body"] or "").lower()
-
+    
+    # NEW DUPLICATE CHECK + REPLY
     if any(k in title or k in body for k in CRYPTO_KEYWORDS):
         issue_number = issue["number"]
-
         comments_url = f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue_number}/comments"
 
         # Get existing comments
         comments = requests.get(comments_url, headers=headers).json()
 
         # Prevent duplicate replies
-        already_replied = any(
-            c["user"]["type"] == "Bot" for c in comments
-        )
+        already_replied = any(c["user"]["type"] == "Bot" for c in comments)
 
         if already_replied:
             print(f"Already replied to issue #{issue_number}, skipping.")
-            continue
+            continue  # skip this issue
 
         # Post reply
-        requests.post(
-            comments_url,
-            headers=headers,
-            json={"body": AUTO_REPLY}
-        )
-
+        requests.post(comments_url, headers=headers, json={"body": AUTO_REPLY})
         print(f"Replied to issue #{issue_number}")
