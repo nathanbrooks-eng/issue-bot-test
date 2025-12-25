@@ -4,11 +4,11 @@ import os
 # GitHub token from environment
 TOKEN = os.getenv("GITHUB_TOKEN")
 
-# Repo information
+# Repository info
 OWNER = "nathanbrooks-eng"
 REPO = "issue-bot-test"
 
-# Keywords for crypto issues
+# Crypto keywords
 CRYPTO_KEYWORDS = [
     "wallet",
     "ledger",
@@ -42,29 +42,34 @@ if response.status_code != 200:
     print("Error:", response.status_code, response.text)
     exit()
 
-# 4️⃣ NOW parse JSON
+# Parse JSON
 issues = response.json()
 
-# 5️⃣ loop issues
+# Loop through issues
 for issue in issues:
-    title = (issue["title"] or "").lower()
-    body = (issue["body"] or "").lower()
-    
-    # NEW DUPLICATE CHECK + REPLY
+    # Skip pull requests
+    if "pull_request" in issue:
+        continue
+
+    title = (issue.get("title") or "").lower()
+    body = (issue.get("body") or "").lower()
+
+    # Check if issue contains any crypto keywords
     if any(k in title or k in body for k in CRYPTO_KEYWORDS):
         issue_number = issue["number"]
-        comments_url = f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue_number}/comments"
+        comment_url = f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue_number}/comments"
 
         # Get existing comments
-        comments = requests.get(comments_url, headers=headers).json()
+        comments = requests.get(comment_url, headers=headers).json()
 
         # Prevent duplicate replies
-        already_replied = any(c["user"]["type"] == "Bot" for c in comments)
-
+        already_replied = any(
+            c.get("user", {}).get("type") == "Bot" for c in comments
+        )
         if already_replied:
             print(f"Already replied to issue #{issue_number}, skipping.")
-            continue  # skip this issue
+            continue
 
         # Post reply
-        requests.post(comments_url, headers=headers, json={"body": AUTO_REPLY})
+        requests.post(comment_url, headers=headers, json={"body": AUTO_REPLY})
         print(f"Replied to issue #{issue_number}")
