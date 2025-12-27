@@ -1,6 +1,6 @@
 name: Issue Description
 description: Describe your issue clearly
-title: ''
+title: "New Issue"       # must be non-empty
 labels: []
 assignees: []
 
@@ -8,3 +8,9 @@ body:
   - type: markdown
     attributes:
       value: "**Issue Description**"
+  - type: textarea        # non-markdown field required
+    attributes:
+      label: "Details"
+      description: "Type your issue details here. You can paste images below."
+      placeholder: "Describe the problem..."
+      required: true
