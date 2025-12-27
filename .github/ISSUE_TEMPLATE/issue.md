@@ -1,9 +1,9 @@
 ---
 name: Issue Description
 about: Create a new issue
-title: "Issue Description"
+title: ""
 labels: []
 assignees: []
 ---
 
-# Issue Description
+**Issue Description**
