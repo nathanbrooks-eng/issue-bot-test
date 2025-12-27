@@ -6,6 +6,4 @@ labels: []
 assignees: ""
 ---
 
-## Issue Description
-
-<!-- Paste text and images below. Images will render automatically. -->
+# Issue Description
