@@ -29,7 +29,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-- name: Auto-assign person
-        uses: t00sh/auto-assign-action@v2.3.2
+- name: Auto-assign Nathan
+        uses: actions/github-script@v7
         with:
-          configuration-path: ".github/assign-config.yml"
+          script: |
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: ['nathanbrooks-eng']
+            })
