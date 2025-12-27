@@ -1,7 +1,10 @@
----
 name: Issue Description
-about: Describe your issue clearly
-title: ""
+description: Describe your issue clearly
+title: ''
 labels: []
-assignees: ""
----
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: "**Issue Description**"
